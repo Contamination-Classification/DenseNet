@@ -5,7 +5,7 @@ cfg = EasyDict()
 cfg.num_classes = 2 
 
 # Use pre-trained weights for Tensorflow backend
-cfg.weights_path = '../cnn_finetune/best_model_wtdecay_wts_class2_1.h5'
+cfg.weights_path = 'model.h5'
 
 # define classes
 cfg.class_names = ['C', 'NC']

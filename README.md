@@ -19,7 +19,9 @@ arXiv:1608.06993
 
    Please note that currently the code only supports grid type 12 (3 X 4).
 
-2. To run the script, use the command -
+2. Please place the downloaded model in the main working directory.
+
+3. To run the script, use the command -
 
 Please update the output directory path and image directory path in the config.py file (RGB_DIR and OUTPUT)
 
