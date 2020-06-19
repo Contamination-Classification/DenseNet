@@ -15,7 +15,7 @@ arXiv:1608.06993
 
 ### Setup environment.
 
-1. Create a conda/virtual environment environment.
+1. Create a conda/python virtual environment.
 
 2. Install the dependencies from requirements.txt using pip -
 
