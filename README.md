@@ -13,6 +13,16 @@ Gao Huang, Zhuang Liu, Kilian Q. Weinberger, Laurens van der Maaten
 arXiv:1608.06993
 ```
 
+### Setup environment.
+
+1. Create a conda/virtual environment environment.
+
+2. Install the dependencies from requirements.txt using pip -
+
+```
+    pip install -r requirements.txt --no-cache-dir
+```
+
 ### To run predictions on the dataset, please follow the below steps.
 
 1. Create a directory for the input rgb images, and place the dataset into this directory.
@@ -26,13 +36,13 @@ arXiv:1608.06993
 Please update the output directory path and image directory path in the config.py file (RGB_DIR and OUTPUT)
 
 ```
-    python inference.py 
+    KERAS_BACKEND=tensorflow python inference.py 
 ```
 
 Or, Include img_dir and output_dir paths as arguments to the script.
 
 ```
-    python inference.py --img_dir directory_path --output_file output_file_name 
+    KERAS_BACKEND=tensorflow python inference.py --img_dir directory_path --output_file output_file_name 
 ```
 
 Format of the output CSV - 
