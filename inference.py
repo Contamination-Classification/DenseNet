@@ -29,7 +29,7 @@ def get_arguments():
         Parse all the command line arguments.
     """
     parser = argparse.ArgumentParser(description="contamination-components")
-    parser.add_argument("--img_dir", type=str, default=cfg.RGB_DIR, help="RGB image directory path.")
+    parser.add_argument("--img-list", required=True, help="Input list that contains complete path to the images")
     parser.add_argument("--output_file", default=cfg.OUTPUT, help="Output file name")
     parser.add_argument("--grid_type", default=12, help="Type of grid (grid type 1 - 12 explants)")
     return parser.parse_args()
@@ -41,13 +41,20 @@ def main():
         
     print("Reading Arguments: ")
     args = get_arguments()
-    print("Reading from the directory {}".format(args.img_dir))
+    #print("Reading from the directory {}".format(args.img_dir))
 
-    images = []
-    for r, d, f in os.walk(args.img_dir):
-        for file in f:
-            if '.jpg' in file:
-                images.append(osp.join(r, file))
+    try:
+        images = open(args.img_list).readlines()
+    except Exception as e:
+        print("Unable to read the image list")
+        print(e)
+        exit()
+
+    #images = []
+    #for r, d, f in os.walk(args.img_dir):
+    #    for file in f:
+    #        if '.jpg' in file:
+    #            images.append(osp.join(r, file))
 
     print("Processing {} images.".format(len(images)))
 
@@ -56,11 +63,14 @@ def main():
     rows = []
 
     # Initialize the pretrained model
+    print("Intializing the pretrained model")
     model = DenseNet(reduction=0.5, classes=cfg.num_classes, weights_path=cfg.weights_path)
     sgd = SGD(lr=1e-2, decay=1e-4, momentum=0.9, nesterov=True)
     model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
+    print("Model loaded sucessfully!")
 
     for img_name in images:
+        img_name = img_name.strip()
         image_row = dict()
         image_row['image_name'] = img_name.split('/')[-1]
         image = cv2.imread(img_name)

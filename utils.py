@@ -25,8 +25,8 @@ class RGBPreprocess:
         height, width, _ = img.shape
 
         # grid dimensions
-        GRID_RANGE_W = math.ceil(width / gridw)
-        GRID_RANGE_H = math.ceil(height / gridh)
+        GRID_RANGE_W = int(math.ceil(width / gridw))
+        GRID_RANGE_H = int(math.ceil(height / gridh))
 
         count, data = 0, []
         for h in range(0, height-1, GRID_RANGE_H):
