@@ -41,7 +41,6 @@ def main():
         
     print("Reading Arguments: ")
     args = get_arguments()
-    #print("Reading from the directory {}".format(args.img_dir))
 
     try:
         images = open(args.img_list).readlines()
@@ -92,28 +91,19 @@ def main():
 
         # run for each grid location.
         for i, im in enumerate(data):
-            missing = missing_expant(im)          # check if the explant is missing
-            if not missing: 
-                # preprocess the image
-                im = Image.fromarray(im)
-                im = im.resize((224, 224), Image.LANCZOS)
-                im = np.asarray(im, np.float64)
-                #im_name = osp.join('images1', '.'.join(img_name.split('/')[-1].split('.')[:-1])+'_'+str(i)+'.jpg')
-                #cv2.imwrite(im_name, cv2.cvtColor(im.astype(np.uint8), cv2.COLOR_RGB2BGR))
+            # preprocess the image
+            im = Image.fromarray(im)
+            im = im.resize((224, 224), Image.LANCZOS)
+            im = np.asarray(im, np.float64)
+            im = np.expand_dims(im, axis=0)
+            im = mean_subtraction(im)
                 
-                im = np.expand_dims(im, axis=0)
-                im = mean_subtraction(im)
-                
-                # Run prediction
-                out = model.predict(im)
-                # print(out)
-                predict = np.argmax(out)
-                # print("Prediction: ", predict)
+            # Run prediction
+            out = model.predict(im)
+            predict = np.argmax(out)
 
-                # write prediction to the row dictionary.
-                image_row[i+1] = cfg.class_names[predict]
-            else:
-                image_row[i+1] = 'M'      
+            # write prediction to the row dictionary.
+            image_row[i+1] = cfg.class_names[predict]
         rows.append(image_row)
 
     # write to csv

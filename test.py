@@ -16,7 +16,7 @@ correct = 0
 confusion_mat = np.zeros((num_classes, num_classes)).astype(np.uint64)
 
 # Load data. Please implement your own load_data() module for your own dataset
-X_valid, Y_valid, valid_files = load_test_data('train_resize')
+X_valid, Y_valid, valid_files = load_test_data('val_resize')
 
 # Insert a new dimension for the batch_size
 with open('predictions.csv', 'w') as f:

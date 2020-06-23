@@ -14,14 +14,14 @@ num_classes = cfg.num_classes
 UNIT_SCALE = True
 SPACE = 50
 
-BASEDIR = '/scratch/cluster-share/kaurd/Contamination_Resnet/ResNet-50-101-152'
+BASEDIR = '../cnn_finetune/'
 
 def load(set_):
     x, y, files = [], [], []
     path = BASEDIR+'/dataset/'+set_ 
     for name in tqdm.tqdm(os.listdir(path), desc='{:{}}'.format('Load dataset', SPACE), unit_scale=UNIT_SCALE):
         files.append(name)
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
         img = Image.open(path+'/'+name) # read as BGR by default
         img = np.asarray(img, np.float64)
         class_ = name.split('_')[0]
