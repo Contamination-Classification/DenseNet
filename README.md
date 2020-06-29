@@ -20,8 +20,39 @@ arXiv:1608.06993
 2. Install the dependencies from requirements.txt using pip -
 
 ```
-    pip install -r requirements.txt --no-cache-dir
+    conda create --name <envname> --file requirements.txt
 ```
+
+To manually install dependencies, follow the below steps - 
+
+1. Create a conda create environment: 
+
+```
+conda create -n envname  python=3.6
+conda activate test1
+```
+
+2. Install Keras and Tensorflow-gpu using Conda
+
+```
+conda install -c conda-forge keras
+conda config --set restore_free_channel true
+conda install tensorflow-gpu=1.13
+```
+
+4. Pip install libraries
+
+```
+pip3 install opencv-python Pillow matplotlib easydict argparse tqdm
+```
+
+Using Conda 
+
+```
+conda install -c conda-forge opencv matplotlib easydict argparse tqdm
+conda install -c anaconda pillow
+```
+
 
 ### To run predictions on the dataset, please follow the below steps.
 
@@ -31,18 +62,20 @@ arXiv:1608.06993
 
 2. Please place the downloaded model in the main working directory.
 
+3. Create a CSV which contains the list of input RGB images. Check test.csv in the folder.
+
 3. To run the script, use the command -
 
-Please update the output directory path and image directory path in the config.py file (RGB_DIR and OUTPUT)
+Please update the output directory path in the config.py file (OUTPUT)
 
 ```
-    KERAS_BACKEND=tensorflow python inference.py 
+    KERAS_BACKEND=tensorflow python inference.py --img-list test.csv
 ```
 
-Or, Include img_dir and output_dir paths as arguments to the script.
+Or, Include img-list and output_file paths as arguments to the script.
 
 ```
-    KERAS_BACKEND=tensorflow python inference.py --img_dir directory_path --output_file output_file_name 
+    KERAS_BACKEND=tensorflow python inference.py --img-list test.csv --output_file output_file_name 
 ```
 
 Format of the output CSV - 
