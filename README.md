@@ -69,14 +69,16 @@ conda install -c anaconda pillow
 Please update the output directory path in the config.py file (OUTPUT)
 
 ```
-    KERAS_BACKEND=tensorflow python inference.py --img-list test.csv
+    KERAS_BACKEND=tensorflow python inference.py --img-list test.csv 
 ```
 
-Or, Include img-list and output_file paths as arguments to the script.
+Or, Include img-list, crop_dims and output_file paths as arguments to the script.
 
 ```
-    KERAS_BACKEND=tensorflow python inference.py --img-list test.csv --output_file output_file_name 
+    KERAS_BACKEND=tensorflow python inference.py --img-list test.csv --output_file output_file_name --crop_dims "(260, 600, 1700, 1710)"  
 ```
+
+To turn on debugging, use the debug flag and set it to True. (--debug True)
 
 Format of the output CSV - 
 

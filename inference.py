@@ -1,6 +1,8 @@
 '''
     Author - Damanpreet Kaur
     Date - 06/09/2020
+    Version - v2
+    Last updated - 22/12/2020
     Purpose - Split explants in the image and classify them as contaminated/not contaminated.
         input - rgb image directory.
         output - csv file with output labels 
@@ -32,6 +34,8 @@ def get_arguments():
     parser.add_argument("--img-list", required=True, help="Input list that contains complete path to the images")
     parser.add_argument("--output_file", default=cfg.OUTPUT, help="Output file name")
     parser.add_argument("--grid_type", default=12, help="Type of grid (grid type 1 - 12 explants)")
+    parser.add_argument("--crop_dims", default=cfg.CROP_DIMS, help="Crop dimensions")
+    parser.add_argument("--debug", action='store_true', help="Crop dimensions")
     return parser.parse_args()
 
 def main():
@@ -49,11 +53,6 @@ def main():
         print(e)
         exit()
 
-    #images = []
-    #for r, d, f in os.walk(args.img_dir):
-    #    for file in f:
-    #        if '.jpg' in file:
-    #            images.append(osp.join(r, file))
 
     print("Processing {} images.".format(len(images)))
 
@@ -81,13 +80,16 @@ def main():
         cv2.imwrite(im_name, image)
 
         if args.grid_type == 12:
-            crop_dims, gridw, gridh = cfg.CROP_DIMS, cfg.GRIDW, cfg.GRIDH
+            gridw, gridh = cfg.GRIDW, cfg.GRIDH
         else:
             raise ValueError(INVALID_GRID_TYPE)
 
         # Pre-process the image.
+        crop_dims = args.crop_dims
+        if type(crop_dims) == str:
+            crop_dims = eval(crop_dims)
         rgb = RGBPreprocess(crop_dims)
-        data = rgb.process_img(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), gridh, gridw)
+        data = rgb.process_img(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), image_row['image_name'], args.debug, gridh, gridw)
 
         # run for each grid location.
         for i, im in enumerate(data):

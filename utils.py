@@ -12,7 +12,7 @@ class RGBPreprocess:
     def __init__(self, crop_dims):
         self.tw, self.th, self.bw, self.bh = crop_dims
 
-    def process_img(self, image, gridh, gridw):
+    def process_img(self, image, fname, debug, gridh, gridw):
         '''
             Return the list of cropped explants.
         '''
@@ -22,6 +22,8 @@ class RGBPreprocess:
         self.h, self.w = 2000, 2000
         image = cv2.resize(image, (self.h, self.w))
         img = image[self.th:self.bh, self.tw:self.bw]
+        if debug:
+            cv2.imwrite(fname, img)
         height, width, _ = img.shape
 
         # grid dimensions
